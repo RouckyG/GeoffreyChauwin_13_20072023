@@ -29,6 +29,11 @@ const userSlice = createSlice({
       state.token = "";
       return state
     },
+    updateName: (state, action) => {
+      const { firstName, lastName } = action.payload;
+      state.firstName = firstName;
+      state.lastName = lastName;
+    }
   },
 })
 
@@ -36,6 +41,6 @@ export const getUser = (state) => {
   return state.user.user
 }
 
-export const { login, logout } = userSlice.actions
+export const { login, logout, updateName } = userSlice.actions
 
 export default userSlice.reducer
