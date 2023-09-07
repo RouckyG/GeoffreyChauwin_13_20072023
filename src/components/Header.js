@@ -11,9 +11,10 @@ const Header = (props) => {
     const dispatch = useDispatch()
     
     const handleLogout = () => {
-        dispatch(logout)
+        dispatch(logout())
+        
     }
-
+    
     return <nav className="main-nav">
         <NavLink to="/" className="main-nav-logo">
             <img
@@ -24,9 +25,9 @@ const Header = (props) => {
             <h1 className="sr-only">Argent Bank</h1>
         </NavLink>
         <div>
-        {user.isLogIn ? (
+        {user.isLogged ? (
           <>
-            <NavLink to="profile" className="main-nav-item">
+            <NavLink to="/profile" className="main-nav-item">
                 <i className="fa fa-user-circle" />
                 {user.firstName}
             </NavLink>

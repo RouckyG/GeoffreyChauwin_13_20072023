@@ -1,39 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux"
-import { updateName } from "../redux/user";
+import { fetchUser, changeUserName } from "../utils/thunkAuth"
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
 
-    const user = useSelector((state) => state.user)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { firstName, lastName, token, loading, error, isLogged } = useSelector((state) => state.user);
+    const dataProfile = {};
+
+    useEffect(() => {
+		if (isLogged) {
+            if(token){
+                dispatch(fetchUser({token}))
+            }
+		}
+        else{
+            navigate("/")
+        }
+	}, []);
 
     const [isEditing, setIsEditing] = useState(false)
 
     const handleNameChange = (e) => {
         e.preventDefault()
-        dispatch(updateName({firstName: e.target.firstName.value, lastName : e.target.lastName.value}))
+        dispatch(changeUserName({firstName: e.target.firstName.value, lastName : e.target.lastName.value, token}))
         setIsEditing(false)
     }
 
-    return <div classNameName="profilePage">
+    return <div className="profilePage">
         <main className="main bg-dark">
             <div className="header">
                 <h1>Welcome back <br/>
-                {!isEditing && user.firstName + " " + user.lastName}</h1>
+                {!isEditing && firstName + " " + lastName}</h1>
                 {isEditing ? (
                     <form onSubmit={(e) => handleNameChange(e)}>
 					<div>
 						<input
                             name="firstName"
 							className="input-name"
-							placeholder={user.firstName}
+							placeholder={firstName}
 							required
 						/>
 						<input
                             name="lastName"
 							className="input-name"
-							placeholder={user.lastName}
+							placeholder={lastName}
 							required
 						/>
 					</div>
