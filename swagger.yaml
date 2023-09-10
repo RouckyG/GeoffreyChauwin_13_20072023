@@ -297,19 +297,33 @@ definitions:
         properties:
           id:
             type: string
-          title: 
+          description: 
             type: string
           amount: 
             type: string
-          amount-description: 
+          date:
+            type: string
+            format: date
+          transaction-type: 
+            type: string
+          category:
+            type: string
+          note:
             type: string
   Transaction:
     type: object
     properties: 
-      title: 
+      description: 
         type: string
       amount: 
         type: string
-      amount-description: 
+      date:
+        type: string
+        format: date
+      transaction-type: 
+        type: string
+      category:
+        type: string
+      note:
         type: string
 
